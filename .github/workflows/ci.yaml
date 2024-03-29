@@ -1,17 +1,13 @@
-name : Continuous Integration
-
-on: 
-  pull_request: 
-    branches:
-      -main
-
-jobs: test:runs-on:ubuntu-latest
-
-  strategy:matrix:node-version:[14.x]
-  steps:- uses:action/checkout@v3
-    - name:Use node.js ${{ matrix.node-version }}
-      uses:action/setup-node@v3
-      with:node-version:${{ matrix.node-version }}
-    - name:Run Automated Tested
-    - run:npm i
-    - run:npm run test
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g bats
+      - run: bats -v
